@@ -5,6 +5,7 @@
 .pytest_cache
 .ruff_cache
 tests
+deploy
 docs
-*.md
+AGENTS.md
 pyproject.toml.bak
