@@ -80,6 +80,18 @@ def create_app() -> Any:
         """
         return {"status": "ready"}
 
+    @app.get("/ping", status_code=status.HTTP_200_OK, tags=["Probe"])
+    async def ping_probe() -> dict[str, str]:
+        """Simple ping endpoint for network latency verification.
+
+        Docstring:
+            Pre-conditions:
+                None.
+            Post-conditions:
+                Returns pong response payload.
+        """
+        return {"ping": "pong"}
+
     @app.get("/", status_code=status.HTTP_200_OK, tags=["Metadata"])
     async def root_status() -> dict[str, Any]:
         """Root status handler returning operational telemetry and environment context.
