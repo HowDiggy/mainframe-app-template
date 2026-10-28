@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import socket
 import time
-from typing import Any, Dict
+from typing import Any
 
 from mainframe_template.config import Settings, get_settings
 
@@ -17,8 +17,7 @@ START_TIME: float = time.time()
 
 
 try:
-    from fastapi import FastAPI, Response, status
-    from fastapi.responses import JSONResponse
+    from fastapi import FastAPI, status
     HAS_FASTAPI = True
 except ImportError:
     HAS_FASTAPI = False
@@ -38,7 +37,7 @@ def create_app() -> Any:
 
     if not HAS_FASTAPI:
         # Minimal pure ASGI fallback for zero-dependency execution environments
-        async def asgi_app(scope: Dict[str, Any], receive: Any, send: Any) -> None:
+        async def asgi_app(scope: dict[str, Any], receive: Any, send: Any) -> None:
             if scope["type"] == "http":
                 body = b'{"status": "ok", "runtime": "asgi-minimal"}'
                 await send({
@@ -58,7 +57,7 @@ def create_app() -> Any:
     )
 
     @app.get("/healthz", status_code=status.HTTP_200_OK, tags=["Probe"])
-    async def liveness_probe() -> Dict[str, str]:
+    async def liveness_probe() -> dict[str, str]:
         """Kubernetes liveness probe handler.
 
         Docstring:
@@ -70,7 +69,7 @@ def create_app() -> Any:
         return {"status": "healthy"}
 
     @app.get("/ready", status_code=status.HTTP_200_OK, tags=["Probe"])
-    async def readiness_probe() -> Dict[str, str]:
+    async def readiness_probe() -> dict[str, str]:
         """Kubernetes readiness probe handler.
 
         Docstring:
@@ -82,7 +81,7 @@ def create_app() -> Any:
         return {"status": "ready"}
 
     @app.get("/", status_code=status.HTTP_200_OK, tags=["Metadata"])
-    async def root_status() -> Dict[str, Any]:
+    async def root_status() -> dict[str, Any]:
         """Root status handler returning operational telemetry and environment context.
 
         Docstring:
