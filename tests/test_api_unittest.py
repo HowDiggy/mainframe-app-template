@@ -54,6 +54,16 @@ class TestAppFactoryUnit(unittest.TestCase):
         application = create_app()
         self.assertTrue(callable(application))
 
+    def test_routes_registered(self) -> None:
+        """Verify core route paths are registered on the application."""
+        application = create_app()
+        if hasattr(application, "routes"):
+            paths = [getattr(r, "path", None) for r in application.routes]
+            self.assertIn("/healthz", paths)
+            self.assertIn("/ready", paths)
+            self.assertIn("/ping", paths)
+            self.assertIn("/", paths)
+
 
 if __name__ == "__main__":
     unittest.main()

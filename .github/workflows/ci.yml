@@ -49,13 +49,21 @@ jobs:
     name: Build & Push Container Image
     needs: quality
     runs-on: ubuntu-latest
+    env:
+      DOCKER_METADATA_PR_HEAD_SHA: true
     outputs:
       image_tag: ${{ steps.tag.outputs.tag }}
       image_digest: ${{ steps.build-push.outputs.digest }}
     steps:
       - name: Determine immutable image tag
         id: tag
-        run: echo "tag=sha-${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            COMMIT_SHA="${{ github.event.pull_request.head.sha }}"
+          else
+            COMMIT_SHA="${GITHUB_SHA}"
+          fi
+          echo "tag=sha-${COMMIT_SHA::7}" >> $GITHUB_OUTPUT
 
       - name: Checkout code
         uses: actions/checkout@v4
