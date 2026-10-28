@@ -6,6 +6,9 @@ resources:
   - 02-service.yaml
   - 03-httproute.yaml
 
+configurations:
+  - kustomizeconfig.yaml
+
 images:
   - name: ghcr.io/howdiggy/mainframe-app-template
     newName: ghcr.io/howdiggy/mainframe-app-template
