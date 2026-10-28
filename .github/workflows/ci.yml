@@ -94,9 +94,9 @@ jobs:
 
       - name: Run Trivy Vulnerability Scanner
         if: github.ref == 'refs/heads/main'
-        uses: aquasecurity/trivy-action@v0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.version }}
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.tag.outputs.tag }}
           format: 'table'
           exit-code: '0'
           ignore-unfixed: true
