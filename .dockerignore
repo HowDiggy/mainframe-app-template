@@ -1,0 +1,10 @@
+.git
+.gitignore
+.dockerignore
+.venv
+.pytest_cache
+.ruff_cache
+tests
+docs
+*.md
+pyproject.toml.bak

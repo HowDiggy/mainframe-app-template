@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "mainframe-app-template"
+version = "0.1.0"
+description = "Canonical Golden Application Template for Autonomous Agent Service Delivery on Mainframe"
+authors = ["Paulo Jauregui <paulo@paulojauregui.com>"]
+readme = "README.md"
+packages = [{include = "mainframe_template", from = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.16"
+fastapi = "^0.115.0"
+uvicorn = {extras = ["standard"], version = "^0.32.0"}
+pydantic = "^2.9.0"
+
+[tool.poetry.group.dev.dependencies]
+ruff = ">=0.6.0"
+pytest = "^8.3.0"
+httpx = "^0.27.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "B", "UP"]
+ignore = []
