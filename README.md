@@ -4,7 +4,7 @@ The standard foundation for building and deploying autonomous agent microservice
 
 ---
 
-## 🚀 Key Architectural Features
+## Key Architectural Features
 
 - **Modern Python Foundation:** Python 3.13 / 3.15 + Poetry + Ruff + strict `src/` layout.
 - **Design by Contract (DbC):** Rigorous type annotations and explicit pre/post-condition docstrings.
@@ -13,7 +13,7 @@ The standard foundation for building and deploying autonomous agent microservice
 
 ---
 
-## 🛠️ Quickstart
+## Quickstart
 
 ### 1. Run Tests Locally
 ```bash
@@ -29,5 +29,5 @@ The API serves at: `http://localhost:8000/`
 
 ---
 
-## 📖 For AI Coding Agents
+## For AI Coding Agents
 See [AGENTS.md](AGENTS.md) for architectural invariants, testing recipes, and GitOps standards.
