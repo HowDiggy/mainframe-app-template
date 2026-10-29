@@ -26,7 +26,7 @@ spec:
         fsGroup: 10001
       containers:
         - name: api
-          image: ghcr.io/howdiggy/mainframe-app-template
+          image: ghcr.io/paulojauregui/mainframe-app-template
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
