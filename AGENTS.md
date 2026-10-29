@@ -1,4 +1,4 @@
-# 🤖 AGENTS.md — AI & Agent Onboarding Guide
+# AGENTS.md — AI & Agent Onboarding Guide
 
 > **For Coding Agents and Engineers:** Read this document first before proposing or implementing changes. It defines the architectural invariants, engineering standards, testing protocols, and PR preview delivery pipeline for services running on `mainframe`.
 
@@ -9,7 +9,7 @@
 This repository is the **Golden Application Template** for new software and business ideas built autonomously by agents. It defines the contract between an autonomous agent's code and `mainframe`'s production Kubernetes environment (`192.168.13.100`):
 
 1. **Inner Loop (In-Sandbox):** Agents implement features, add tests, and verify linting with zero external dependencies.
-2. **Review Loop (PR Previews):** Opening a Pull Request automatically triggers GitHub Actions to build `linux/amd64` images, while ArgoCD's `ApplicationSet` provisions an isolated preview namespace (`preview-<app>-pr-<number>`) and Gateway API `HTTPRoute` at `https://<app>-pr-<number>.paulojauregui.com`.
+2. **Review Loop (PR Previews):** Opening a Pull Request automatically triggers GitHub Actions to build `linux/amd64` images, while ArgoCD's `ApplicationSet` provisions an isolated preview namespace (`preview-<app>-pr-<number>`) and Gateway API `HTTPRoute` at `https://app-template-pr-<number>.paulojauregui.com`.
 3. **Outer Loop (GitOps Promotion):** Human approval and merge to `main` promotes the service to persistent production and prunes the preview environment.
 
 ---
@@ -86,6 +86,17 @@ kubectl kustomize deploy/base
 
 1. Push your feature branch to GitHub (`git push origin feat/your-feature`).
 2. Open a Pull Request targeting `main`.
-3. GitHub Actions builds the image and pushes `ghcr.io/howdiggy/mainframe-app-template:sha-<short>`.
-4. ArgoCD discovers the PR and deploys your environment to `https://mainframe-app-template-pr-<number>.paulojauregui.com`.
-5. Human reviews the live preview, verifies changes, and merges into `main`.
+3. GitHub Actions builds the image and pushes `ghcr.io/paulojauregui/mainframe-app-template:sha-<short>`.
+4. ArgoCD discovers the PR and deploys your environment to `https://app-template-pr-<number>.paulojauregui.com`.
+5. Human maintainer reviews the live preview, verifies changes, and merges into `main`.
+
+---
+
+## 6. Bot Authorship & Human Approval Protocol
+
+* **Autonomous Identity:** All commits and PRs generated inside `agent-workshop` are authenticated via the `tron-agent-mainframe[bot]` GitHub App.
+* **Branching Invariant:** Direct pushes to `main` are blocked by server-side branch protection. Always create a descriptive branch (`feat/...`, `fix/...`, `docs/...`).
+* **The Human Review Gate:**
+  1. Once a PR is opened, automated CI checks validate formatting, tests, and container builds.
+  2. The human maintainer (@HowDiggy) reviews the diff under the **Files changed** tab and submits an official **Approve** review.
+  3. Once approved and all checks pass, the PR can be merged to production.
